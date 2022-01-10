@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.immobilier.entities.Contrat;
-import com.immobilier.entities.Immobilier;
 import com.immobilier.exceptions.ResourceNotFoundException;
 import com.immobilier.repository.AnnonceRepository;
 import com.immobilier.repository.ContratRepository;
@@ -43,24 +42,25 @@ public class ContratServicesImpl implements ContratServices{
 		}
 	}
 
-	@Override
+//	@Override
 	public Boolean update(Integer id, Contrat newContrat) {
-		Contrat optionalResult = contratRepo.findById(id)
-				.orElseThrow((() -> new ResourceNotFoundException("Le contrat avec l'id" + id + " n'existe pas"))) ;
-		if (optionalResult != null) {
-			optionalResult.setId_immobilier(newImmobilier.getId_immobilier());
-			optionalResult.setCategorie(newImmobilier.getCategorie());
-			optionalResult.setPrix(newImmobilier.getPrix());
-			
-			if (contratRepo.save(optionalResult) != null) {
-				return true ;
-			}else {
-				return false ;
-			}
-			
-		}else {
-			return false ;
-		}
+		return null;
+//		Contrat optionalResult = contratRepo.findById(id)
+//				.orElseThrow((() -> new ResourceNotFoundException("Le contrat avec l'id" + id + " n'existe pas"))) ;
+//		if (optionalResult != null) {
+//			optionalResult.setId_immobilier(newImmobilier.getId_immobilier());
+//			optionalResult.setCategorie(newImmobilier.getCategorie());
+//			optionalResult.setPrix(newImmobilier.getPrix());
+//			
+//			if (contratRepo.save(optionalResult) != null) {
+//				return true ;
+//			}else {
+//				return false ;
+//			}
+//			
+//		}else {
+//			return false ;
+//		}
 	}
 
 	@Override

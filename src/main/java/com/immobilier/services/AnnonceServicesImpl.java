@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.immobilier.entities.Annonce;
-import com.immobilier.entities.Immobilier;
 import com.immobilier.exceptions.ResourceNotFoundException;
 import com.immobilier.repository.AnnonceRepository;
 import com.immobilier.repository.ImmobilierRepository;
@@ -64,7 +63,7 @@ public class AnnonceServicesImpl implements AnnonceServices{
 			optionalResult.setEtat_reservation(newAnnonce.getEtat_reservation());
 
 
-			if (immobilierRepo.save(optionalResult) != null) {
+			if (annonceRepository.save(optionalResult) != null) {
 				return true ;
 			}else {
 				return false ;
