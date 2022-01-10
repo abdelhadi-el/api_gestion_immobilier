@@ -3,7 +3,6 @@ package com.immobilier.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,7 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     	http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) ;
 
         http.authorizeRequests().antMatchers( "/api/login/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
-        http.authorizeRequests().antMatchers( HttpMethod.GET,"/api/authentication/token/refresh/**" ).permitAll() ; 
+       // http.authorizeRequests().antMatchers( "/api/login/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
+        http.authorizeRequests().antMatchers( "/api/authentication/**" ).permitAll() ; 
     	http.authorizeRequests()
         		.antMatchers( "/api/users/**" ).hasAnyAuthority("ADMIN") ;
 //        		.antMatchers( "/api/users/**" )
