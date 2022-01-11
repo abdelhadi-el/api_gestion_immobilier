@@ -7,5 +7,6 @@ import com.immobilier.entities.Utilisateur;
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Integer>{
 
 	Utilisateur findByUserName(String username);
+	Utilisateur findByEmail(String email);
 
 }
