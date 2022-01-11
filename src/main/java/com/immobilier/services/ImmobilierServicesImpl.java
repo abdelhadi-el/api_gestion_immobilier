@@ -26,7 +26,7 @@ public class ImmobilierServicesImpl implements ImmobilierServices{
 		if (immobilier != null) {
 			return immobilierRepo.save(immobilier) ;
 		}else {
-			return null ;
+			throw new ResourceNotFoundException("les donnees du contrat entre sont non suffisants") ;
 		}
 	}
 
@@ -34,31 +34,30 @@ public class ImmobilierServicesImpl implements ImmobilierServices{
 	public Immobilier get(Integer id_Immobilier) {
 		Immobilier optionalResult = immobilierRepo.findById(id_Immobilier)
 				.orElseThrow((() -> new ResourceNotFoundException("L'immobilier avec l'id" + id_Immobilier + " n'existe pas"))) ;
-		if (optionalResult != null ) {
-			return optionalResult;
-		}else {
-			return null ;
-		}
+
+		return optionalResult;
+
+		//		if (optionalResult != null ) {
+//			return optionalResult;
+//		}else {
+//			return null ;
+//		}
 	}
 
 	@Override
 	public Boolean update(Integer id, Immobilier newImmobilier) {
 		Immobilier optionalResult = immobilierRepo.findById(id)
 				.orElseThrow((() -> new ResourceNotFoundException("L'immobilier avec l'id" + id + " n'existe pas"))) ;
-		if (optionalResult != null) {
-			optionalResult.setId_immobilier(newImmobilier.getId_immobilier());
-			optionalResult.setCategorie(newImmobilier.getCategorie());
-			optionalResult.setPrix(newImmobilier.getPrix());
-			
-			if (immobilierRepo.save(optionalResult) != null) {
-				return true ;
-			}else {
-				return false ;
-			}
-			
+		//optionalResult.setId_immobilier(newImmobilier.getId_immobilier());  // pas de modif de id
+		optionalResult.setCategorie(newImmobilier.getCategorie());
+		optionalResult.setPrix(newImmobilier.getPrix());
+		
+		if (immobilierRepo.save(optionalResult) != null) {
+			return true ;
 		}else {
 			return false ;
 		}
+		
 	}
 
 	@Override
@@ -68,14 +67,11 @@ public class ImmobilierServicesImpl implements ImmobilierServices{
 
 	@Override
 	public Boolean delete(Integer id) {
-		Immobilier immobilier = immobilierRepo.findById(id)
+		immobilierRepo.findById(id)
 				.orElseThrow((() -> new ResourceNotFoundException("L'immobilier avec l'id" + id + " n'existe pas"))) ;
-		if (immobilier != null) {
-			immobilierRepo.deleteById(id);
-			return true ;
-		}else {
-			return false ;
-		}
+		immobilierRepo.deleteById(id);
+		return true ;
+		
 	}
 
 }

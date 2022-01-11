@@ -34,7 +34,7 @@ public class UsersController {
 	
 	@PostMapping("/save")
 	public ResponseEntity<Utilisateur> saveUser(@RequestBody Utilisateur user ) {
-		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("users/save").toUriString()) ;
+		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/save").toUriString()) ;
 		return ResponseEntity.created(uri).body(userService.save(user));
 	}
 	
@@ -49,7 +49,7 @@ public class UsersController {
 	}
 	
 	@DeleteMapping("/delete")
-	public ResponseEntity<Boolean> updateUser(@RequestParam Integer id ) { // look at the annotations if it's valid
+	public ResponseEntity<Boolean> deleteUser(@RequestParam Integer id ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(userService.delete(id));
 	}
 	

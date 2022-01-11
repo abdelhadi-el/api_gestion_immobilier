@@ -63,9 +63,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 				sign(algo);
 //		response.setHeader("access_token", access_token); 
 //		response.setHeader("refresh_token", refresh_token);
-		Map<String, String> tokens = new HashMap<>() ;
+		Map<String, Object> tokens = new HashMap<>() ;
 		tokens.put("access_token", access_token) ;
 		tokens.put("refresh_token", refresh_token) ;
+		tokens.put("Object", user) ;					// i changed this and the type of the HashMap object
 		response.setContentType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
 		new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 		

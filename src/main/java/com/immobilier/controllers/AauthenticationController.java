@@ -49,8 +49,14 @@ public class AauthenticationController
     public ResponseEntity<Utilisateur> register(@RequestBody Utilisateur user) {
 		if (user != null) {
 			Utilisateur userSaved = userServices.save(user) ;
-			URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/authentication/register").toUriString()) ;
-			return ResponseEntity.created(uri).body(userSaved);
+			if (userSaved != null) {
+				URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/authentication/register").toUriString()) ;
+				return ResponseEntity.created(uri).body(userSaved);
+			}else {
+				return (ResponseEntity<Utilisateur>) ResponseEntity.status(HttpStatus.NO_CONTENT).body(userSaved); //(uri).body(userSaved);
+
+			}
+			
 		}else {
 			return (ResponseEntity<Utilisateur>) ResponseEntity.status(HttpStatus.NO_CONTENT); // body(userSaved);
 		}

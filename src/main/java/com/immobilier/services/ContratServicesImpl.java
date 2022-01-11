@@ -4,13 +4,12 @@ import java.util.ArrayList;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.immobilier.entities.Contrat;
 import com.immobilier.exceptions.ResourceNotFoundException;
-import com.immobilier.repository.AnnonceRepository;
 import com.immobilier.repository.ContratRepository;
-import com.immobilier.repository.UtilisateurRepository;
 import com.immobilier.services.interfaces.ContratServices;
 
 import lombok.RequiredArgsConstructor;
@@ -18,8 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Service @RequiredArgsConstructor @Transactional
 public class ContratServicesImpl implements ContratServices{
 	
-	AnnonceRepository annonceRepo;
-	UtilisateurRepository userRepo;
+	@Autowired
 	ContratRepository contratRepo;
 	
 	@Override
@@ -27,7 +25,8 @@ public class ContratServicesImpl implements ContratServices{
 		if (contrat != null) {
 			return contratRepo.save(contrat) ;
 		}else {
-			return null ;
+			throw new ResourceNotFoundException("les donnees du contrat entre sont non suffisants") ;
+			//return null ;
 		}
 	}
 
@@ -35,44 +34,41 @@ public class ContratServicesImpl implements ContratServices{
 	public Contrat get(Integer id_contrat) {
 		Contrat optionalResult = contratRepo.findById(id_contrat)
 				.orElseThrow((() -> new ResourceNotFoundException("Le contrat avec l'id" + id_contrat + " n'existe pas"))) ;
-		if (optionalResult != null ) {
-			return optionalResult;
-		}else {
-			return null ;
-		}
+		return optionalResult;
+		
 	}
 
 //	@Override
 	public Boolean update(Integer id, Contrat newContrat) {
-		return null;
-//		Contrat optionalResult = contratRepo.findById(id)
-//				.orElseThrow((() -> new ResourceNotFoundException("Le contrat avec l'id" + id + " n'existe pas"))) ;
-//		if (optionalResult != null) {
-//			optionalResult.setId_immobilier(newImmobilier.getId_immobilier());
-//			optionalResult.setCategorie(newImmobilier.getCategorie());
-//			optionalResult.setPrix(newImmobilier.getPrix());
-//			
-//			if (contratRepo.save(optionalResult) != null) {
-//				return true ;
-//			}else {
-//				return false ;
-//			}
-//			
-//		}else {
-//			return false ;
-//		}
+		Contrat optionalResult = contratRepo.findById(id)
+				.orElseThrow((() -> new ResourceNotFoundException("Le contrat avec l'id" + id + " n'existe pas"))) ;
+		//optionalResult.setId_contrat(newImmobilier.getId_immobilier()); // pas de modif de id
+		optionalResult.setAnnonce(newContrat.getAnnonce());
+		optionalResult.setUser_vendeur(newContrat.getUser_vendeur());
+		optionalResult.setUser_acheteur(newContrat.getUser_acheteur());
+		optionalResult.setObjet_contrat(newContrat.getObjet_contrat());
+		optionalResult.setType_transaction(newContrat.getType_transaction());
+
+		if (contratRepo.save(optionalResult) != null) {
+			return true ;
+		}else {
+			return false ;
+		}
+		
 	}
 
 	@Override
 	public ArrayList<Contrat> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (ArrayList<Contrat>) contratRepo.findAll();
+
 	}
 
 	@Override
 	public Boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		contratRepo.findById(id)
+				.orElseThrow((() -> new ResourceNotFoundException("Le contrat avec l'id" + id + " n'existe pas"))) ;
+		contratRepo.deleteById(id);
+		return true ;
 	}
 
 }

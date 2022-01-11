@@ -39,12 +39,12 @@ public class ImmobilierController {
 		return ResponseEntity.created(uri).body(immobilierService.save(immobilier));
 	}
 	
-	@GetMapping("/userById")
+	@GetMapping("/immobilierById")
 	public ResponseEntity<Immobilier> getImmobilier(@RequestParam Integer id ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(immobilierService.get(id));
 	}
 	
-	@PutMapping("/updateUser")
+	@PutMapping("/updateImmobilier")
 	public ResponseEntity<Boolean> updateImmobilier(@RequestParam Integer id,@RequestBody Immobilier newImmobilier  ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(immobilierService.update(id, newImmobilier));
 	}

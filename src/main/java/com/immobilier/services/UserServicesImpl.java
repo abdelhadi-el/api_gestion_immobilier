@@ -34,7 +34,7 @@ public class UserServicesImpl implements UserServices, UserDetailsService{
 			user.setPassword(passEncoder.encode(user.getPassword()));
 			return userRepo.save(user) ;
 		}else {
-			return null ;
+			throw new ResourceNotFoundException("les donnees de l'utilisateur entre sont non suffisants") ;
 		}
 	}
 		
@@ -43,34 +43,32 @@ public class UserServicesImpl implements UserServices, UserDetailsService{
 	public Utilisateur get(Integer id_user) {
 		Utilisateur optionalResult = userRepo.findById(id_user)
 				.orElseThrow((() -> new ResourceNotFoundException("Utilisateur avec l'id" + id_user + " n'existe pas"))) ;
-		if (optionalResult != null ) {
-			return optionalResult;
-		}else {
-			return null ;
-		}
+
+		return optionalResult;
+		//		if (optionalResult != null ) {
+//			return optionalResult;
+//		}else {
+//			return null ;
+//		}
 	}
 
 	@Override
 	public Boolean update(Integer id, Utilisateur newUser) {
 		Utilisateur user = userRepo.findById(id)
 				.orElseThrow((() -> new ResourceNotFoundException("Utilisateur avec l'id" + id + " n'existe pas"))) ;
-		if (user != null) {
-			user.setUserName(newUser.getUserName());
-			user.setPassword( passEncoder.encode( newUser.getPassword() ) );
-			user.setRole(newUser.getRole());
-			user.setTelephone(newUser.getTelephone());
-			user.setAdresse(newUser.getAdresse());
-			user.setEmail(newUser.getEmail());
-			
-			if (userRepo.save(user) != null) {
-				return true ;
-			}else {
-				return false ;
-			}
-			
+		user.setUserName(newUser.getUserName());
+		user.setPassword( passEncoder.encode( newUser.getPassword() ) );
+		user.setRole(newUser.getRole());
+		user.setTelephone(newUser.getTelephone());
+		user.setAdresse(newUser.getAdresse());
+		user.setEmail(newUser.getEmail());
+		
+		if (userRepo.save(user) != null) {
+			return true ;
 		}else {
 			return false ;
 		}
+			
 	}
 
 	@Override
@@ -81,14 +79,10 @@ public class UserServicesImpl implements UserServices, UserDetailsService{
 	@Override
 	public Boolean delete(Integer id) {
 
-		Utilisateur user = userRepo.findById(id)
+		userRepo.findById(id)
 				.orElseThrow((() -> new ResourceNotFoundException("Utilisateur avec l'id" + id + " n'existe pas"))) ;
-		if (user != null) {
-			userRepo.deleteById(id);
-			return true ;
-		}else {
-			return false ;
-		}
+		userRepo.deleteById(id);
+		return true ;
 		
 	}
 
