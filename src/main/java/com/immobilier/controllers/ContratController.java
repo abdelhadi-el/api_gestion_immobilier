@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/contrat") // remplir la
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:8081")
 public class ContratController {
 
 	@Autowired
@@ -41,7 +43,11 @@ public class ContratController {
 	
 	@GetMapping("/contratById")
 	public ResponseEntity<Contrat> getContrat(@RequestParam Integer id ) { // look at the annotations if it's valid
-		return ResponseEntity.ok().body(contratService.get(id));
+		if (id != null) {
+			return ResponseEntity.ok().body(contratService.get(id));
+		}else {
+			return null ;
+		}
 	}
 	
 	@PutMapping("/updateContrat")

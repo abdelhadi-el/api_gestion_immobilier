@@ -36,8 +36,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     	http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) ;
 
         http.authorizeRequests().antMatchers( "/api/login/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
-       // http.authorizeRequests().antMatchers( "/api/login/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
+        http.authorizeRequests().antMatchers( "/image/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
+
+        // http.authorizeRequests().antMatchers( "/api/login/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
         http.authorizeRequests().antMatchers( "/api/authentication/**" ).permitAll() ; 
+        http.authorizeRequests().antMatchers( "/api/immobilier/**" ).permitAll() ; // to change
+        http.authorizeRequests().antMatchers( "/api/annonce/**" ).permitAll() ; // to change
+
     	http.authorizeRequests()
         		.antMatchers( "/api/users/**" ).hasAnyAuthority("ADMIN") ;
 //        		.antMatchers( "/api/users/**" )

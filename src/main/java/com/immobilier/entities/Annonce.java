@@ -1,6 +1,5 @@
 package com.immobilier.entities;
 
-import java.sql.Blob;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -31,7 +30,9 @@ public class Annonce {
 	@JoinColumn(name = "id_user_reserve", referencedColumnName = "id_user")
 	private Utilisateur user_reserve ;
 	private String titre ;
-	private Blob photo ; 			// voir ce type
+//	@OneToOne
+//	@JoinColumn(name = "image_annonce", referencedColumnName = "id_image")
+//	private byte[] image_annonce ;
 	private String type ;
 	private Date date_annonce ;
 	private String etat_validation ;

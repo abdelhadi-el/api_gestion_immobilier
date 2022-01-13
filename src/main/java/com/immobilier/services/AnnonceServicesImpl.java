@@ -41,12 +41,12 @@ public class AnnonceServicesImpl implements AnnonceServices{
 	public Boolean update(Integer id, Annonce newAnnonce) {
 		Annonce optionalResult = annonceRepository.findById(id)
 				.orElseThrow((() -> new ResourceNotFoundException("L'annonce avec l'id" + id + " n'existe pas"))) ;
-		optionalResult.setId_annonce(newAnnonce.getId_annonce());
+	//	optionalResult.setId_annonce(newAnnonce.getId_annonce());
 		optionalResult.setImmobilier(newAnnonce.getImmobilier());     // peut ajouter la du traitement pour que n'existe pas 
 		optionalResult.setUser_post(newAnnonce.getUser_post());
 		optionalResult.setUser_reserve(newAnnonce.getUser_reserve());
 		optionalResult.setTitre(newAnnonce.getTitre());
-		optionalResult.setPhoto(newAnnonce.getPhoto());
+		//optionalResult.setImage_annonce(newAnnonce.getImage_annonce());
 		optionalResult.setType(newAnnonce.getType());
 		optionalResult.setDate_annonce(newAnnonce.getDate_annonce());
 		optionalResult.setEtat_validation(newAnnonce.getEtat_validation());

@@ -30,7 +30,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		System.out.println( request.getServletPath()  + " calling PATH" );
-		if(request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/authentication/token/refresh") ) { // just try to login
+		if(request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/authentication/token/refresh")
+					|| request.getServletPath().equals("/image/uploadImage") ) { // just try to login
 				System.out.println("passed by here");
 			filterChain.doFilter(request, response) ;
 		}else {
