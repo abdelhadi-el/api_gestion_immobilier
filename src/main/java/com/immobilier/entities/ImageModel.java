@@ -14,23 +14,23 @@ public class ImageModel {
 		this.id = id;
 	}
 
-	public Integer getId_annonce() {
-		return id_annonce;
-	}
+//	public Integer getId_annonce() {
+//		return id_annonce;
+//	}
 
-	public void setId_annonce(Integer id_annonce) {
-		this.id_annonce = id_annonce;
-	}
+//	public void setId_annonce(Integer id_annonce) {
+//		this.id_annonce = id_annonce;
+//	}
 
 	public ImageModel() {
 		super();
 	}
 
-	public ImageModel( String name, String type, byte[] picByte, Integer id_annonce) {
+	public ImageModel( String name, String type, byte[] picByte /*, Integer id_annonce*/) {
 		this.name = name;
 		this.type = type;
 		this.picByte = picByte;
-		this.id_annonce = id_annonce ;
+	//	this.id_annonce = id_annonce ;
 	}
 
 	@Id
@@ -38,7 +38,7 @@ public class ImageModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Integer id_annonce;
+	//private Integer id_annonce;
 
 	@Column(name = "name")
 	private String name;

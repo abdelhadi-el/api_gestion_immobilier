@@ -29,28 +29,28 @@ public class UsersController {
 	@Autowired
 	UserServices userService ;
 
-	@GetMapping("/getAll")
+	@GetMapping("/getAll")	// private end_point ==> for "ADMIN Role
 	public ResponseEntity<List<Utilisateur>> getUsers() {
 		return ResponseEntity.ok().body(userService.getAll());
 	}
 	
-	@PostMapping("/save")
+	@PostMapping("/save") // private end_point ==> for "ADMIN Role
 	public ResponseEntity<Utilisateur> saveUser(@RequestBody Utilisateur user ) {
 		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/save").toUriString()) ;
 		return ResponseEntity.created(uri).body(userService.save(user));
 	}
 	
-	@GetMapping("/userById")
+	@GetMapping("/userById") // private end_point ==> for "ADMIN Role
 	public ResponseEntity<Utilisateur> getUser(@RequestParam Integer id ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(userService.get(id));
 	}
 	
-	@PutMapping("/updateUser")
+	@PutMapping("/updateUser") // private end_point ==> for "ADMIN Role
 	public ResponseEntity<Boolean> updateUser(@RequestParam Integer id,@RequestBody Utilisateur newUser  ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(userService.update(id, newUser));
 	}
 	
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete") // private end_point ==> for "ADMIN Role
 	public ResponseEntity<Boolean> deleteUser(@RequestParam Integer id ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(userService.delete(id));
 	}

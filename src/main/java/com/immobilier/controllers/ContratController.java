@@ -30,18 +30,18 @@ public class ContratController {
 	@Autowired
 	ContratServices contratService ;
 
-	@GetMapping("/getAll")
+	@GetMapping("/getAll") 	// private end_point ==> for "ADMIN" Role
 	public ResponseEntity<ArrayList<Contrat>> getContrats() {
 		return ResponseEntity.ok().body(contratService.getAll());
 	}
 	
-	@PostMapping("/save")
+	@PostMapping("/save")	// public end_point ==> for "USER" AND "ADMIN" Role
 	public ResponseEntity<Contrat> saveContrat(@RequestBody Contrat contrat ) {
 		URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/contrat/save").toUriString()) ;
 		return ResponseEntity.created(uri).body(contratService.save(contrat));
 	}
 	
-	@GetMapping("/contratById")
+	@GetMapping("/contratById")		// public end_point ==> for "USER" that signed the contrat AND "ADMIN" Role
 	public ResponseEntity<Contrat> getContrat(@RequestParam Integer id ) { // look at the annotations if it's valid
 		if (id != null) {
 			return ResponseEntity.ok().body(contratService.get(id));
@@ -50,12 +50,12 @@ public class ContratController {
 		}
 	}
 	
-	@PutMapping("/updateContrat")
+	@PutMapping("/updateContrat")		// public end_point ==> for "USER" that signed the contrat AND "ADMIN" Role
 	public ResponseEntity<Boolean> updateContrat(@RequestParam Integer id,@RequestBody Contrat newContrat  ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(contratService.update(id, newContrat));
 	}
 	
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete")			// public end_point ==> for "USER" AND "ADMIN" Role
 	public ResponseEntity<Boolean> deleteContrat(@RequestParam Integer id ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(contratService.delete(id));
 	}

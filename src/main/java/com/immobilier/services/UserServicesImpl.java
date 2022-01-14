@@ -18,9 +18,7 @@ import com.immobilier.exceptions.ResourceNotFoundException;
 import com.immobilier.repository.UtilisateurRepository;
 import com.immobilier.services.interfaces.UserServices;
 
-import lombok.RequiredArgsConstructor;
-
-@Service @RequiredArgsConstructor @Transactional
+@Service @Transactional
 public class UserServicesImpl implements UserServices, UserDetailsService{
 
 	@Autowired

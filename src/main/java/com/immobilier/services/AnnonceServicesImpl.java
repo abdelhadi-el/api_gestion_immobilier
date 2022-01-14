@@ -1,6 +1,7 @@
 package com.immobilier.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -22,7 +23,7 @@ public class AnnonceServicesImpl implements AnnonceServices{
 	
 	@Override
 	public Annonce save(Annonce annonce) {
-		if (annonce != null) {
+		if (annonce != null) {		
 			return annonceRepository.save(annonce) ;
 		}else {
 			return null ;
@@ -72,5 +73,16 @@ public class AnnonceServicesImpl implements AnnonceServices{
 		annonceRepository.deleteById(id);
 		return true ;
 	}
+
+	@Override
+	public List<Annonce> findByIdUser(Integer id_user_post) {
+		List<Annonce> result = annonceRepository.findByIdUserPost(id_user_post) ;
+		if (result != null) {
+			return result;
+		}else {
+			return null ;
+		}
+	}
+
 
 }

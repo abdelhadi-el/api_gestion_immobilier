@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.immobilier.entities.ImageModel;
 import com.immobilier.repository.ImageRepository;
 
+//this file is not used
 @RestController
 @CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping(path = "/image")
@@ -29,11 +30,11 @@ public class ImageUploadController {
 	ImageRepository imageRepository;
 
 	@PostMapping("/upload")
-	public Boolean uplaodImage(@RequestParam("imageFile") MultipartFile file,@RequestParam("id_annonce") Integer id_annonce) throws IOException {
+	public Boolean uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
 
 		System.out.println("Original Image Byte Size - " + file.getBytes().length);
 		ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
-				compressBytes(file.getBytes()), id_annonce);
+				compressBytes(file.getBytes()));
 		imageRepository.save(img);
 		return true;
 	}
@@ -44,8 +45,7 @@ public class ImageUploadController {
 		final Optional<ImageModel> retrievedImage = imageRepository.findByIdAnnonce(id_annonce);
 		ImageModel img = new ImageModel(retrievedImage.get().getName(), 
 								retrievedImage.get().getType(),
-								decompressBytes(retrievedImage.get().getPicByte()),
-								retrievedImage.get().getId_annonce());
+								decompressBytes(retrievedImage.get().getPicByte()));
 		return img;
 	}
 

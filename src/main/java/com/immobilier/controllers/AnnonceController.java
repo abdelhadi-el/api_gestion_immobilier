@@ -30,13 +30,14 @@ public class AnnonceController {
 	@Autowired
 	AnnonceServices annonceService ;
 
-	@GetMapping("/getAll")
+	@GetMapping("/getAll")    // public end_point ==> for "USER" AND "ADMIN" Role
 	public ResponseEntity<ArrayList<Annonce>> getAnnonces() {
 		return ResponseEntity.ok().body(annonceService.getAll());
 	}
 	
-	@PostMapping("/save")
-	public ResponseEntity<Annonce> saveAnnonce(@RequestBody Annonce annonce/*, @RequestParam MultipartFile image */) {
+	@PostMapping("/save")	// public end_point ==> for "USER" AND "ADMIN Role
+	public ResponseEntity<Annonce> saveAnnonce(@RequestBody Annonce annonce) {
+		
 //		ImageUploadController imgLogic = new ImageUploadController() ;
 //		try {
 //			imgLogic.uplaodImage(image, annonce.getId_annonce()) ;
@@ -48,7 +49,7 @@ public class AnnonceController {
 		return ResponseEntity.created(uri).body(annonceService.save(annonce));
 	}
 	
-	@GetMapping("/annonceById")
+	@GetMapping("/annonceById")		// public end_point ==> for "USER" AND "ADMIN Role
 	public ResponseEntity<Annonce> getAnnonce(@RequestParam Integer id ) { // look at the annotations if it's valid
 //		HashMap<String, Object> resultBody = new HashMap<>() ;
 //		ImageUploadController imgLogic = new ImageUploadController() ;
@@ -67,12 +68,12 @@ public class AnnonceController {
 		}
 	}
 	
-	@PutMapping("/updateAnnonce")
+	@PutMapping("/updateAnnonce") // public end_point ==> for "USER" that posted the annonce AND "ADMIN Role
 	public ResponseEntity<Boolean> updateAnnonce(@RequestParam Integer id,@RequestBody Annonce newAnnonce  ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(annonceService.update(id, newAnnonce));
 	}
 	
-	@DeleteMapping("/delete")
+	@DeleteMapping("/delete")	// public end_point ==> for "USER" that posted the annonce AND "ADMIN Role
 	public ResponseEntity<Boolean> deleteAnnonce(@RequestParam Integer id ) { // look at the annotations if it's valid
 		return ResponseEntity.ok().body(annonceService.delete(id));
 	}

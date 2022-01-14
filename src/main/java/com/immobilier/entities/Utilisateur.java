@@ -1,5 +1,6 @@
 package com.immobilier.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Utilisateur {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_user;
+	@Column( unique=true)
     private String userName;
     private String email;
     private String password;

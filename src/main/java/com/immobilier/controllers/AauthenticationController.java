@@ -20,6 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,15 +68,19 @@ public class AauthenticationController
 			
 		}
 	
-//    
-//    @PostMapping("/login")
-//    public String login() {
-//    	System.out.println("entred Login");
-//        if (this.isAuthenticated()) {
-//            return "redirect:/index";
-//        }
-//        return "login";
-//    }
+    
+    @GetMapping("/getInfos")
+    public Utilisateur getInfos() {
+
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+		    String currentUserName = authentication.getName();
+	        return userServices.get(currentUserName) ;
+		}else {
+			System.out.println("no one is authenticated");
+			return null ;
+		}
+    }
 
 	@GetMapping("/token/refresh")
 	public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws StreamWriteException, DatabindException, IOException {

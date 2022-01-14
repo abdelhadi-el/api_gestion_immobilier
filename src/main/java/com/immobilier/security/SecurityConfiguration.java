@@ -35,17 +35,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     	http.csrf().disable() ; 
     	http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) ;
 
-        http.authorizeRequests().antMatchers( "/api/login/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
-        http.authorizeRequests().antMatchers( "/image/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
+        http.authorizeRequests().antMatchers("/api/login" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
+        //http.authorizeRequests().antMatchers( "/image/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
 
         // http.authorizeRequests().antMatchers( "/api/login/**" ).permitAll() ; //THAT IF WE WANT TO SKIP SECURTY IN SOME URLS
         http.authorizeRequests().antMatchers( "/api/authentication/**" ).permitAll() ; 
-        http.authorizeRequests().antMatchers( "/api/immobilier/**" ).permitAll() ; // to change
-        http.authorizeRequests().antMatchers( "/api/annonce/**" ).permitAll() ; // to change
+        http.authorizeRequests().antMatchers( "/api/userRole" ).permitAll() ; 
 
+        http.authorizeRequests().antMatchers( "/api/immobilier/**" ).hasAnyAuthority("ADMIN", "USER") ; // to change
+        http.authorizeRequests().antMatchers( "/api/annonce/**" ).hasAnyAuthority("ADMIN", "USER") ;
+    
+        http.authorizeRequests().antMatchers( "/api/contrat/getAll" ).hasAnyAuthority("ADMIN") ;
+        http.authorizeRequests().antMatchers( "/api/contrat/**" ).hasAnyAuthority("ADMIN", "USER") ;
     	http.authorizeRequests()
         		.antMatchers( "/api/users/**" ).hasAnyAuthority("ADMIN") ;
-//        		.antMatchers( "/api/users/**" )
+//        		.antMatchers( "/api/users/**" )/api/userRole
 //        		.antMatchers( HttpMethod.POST, "/api/users/save/**" ).hasAnyAuthority("USER") ;
         		//.antMatchers( HttpMethod.GET, "/users/**" ).hasAnyAuthority("USER"); // ON CONTINUE SELON CE QU'ON 
 

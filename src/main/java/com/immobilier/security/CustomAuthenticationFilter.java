@@ -25,7 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-	
+//	@Autowired
+//	UserServices userServices ;
 	AuthenticationManager authenticationManager ;
 
 	public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -44,29 +45,30 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	}
 	
 	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+	public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		System.out.println("success conn \n\n");
+		
 		User user = (User) authResult.getPrincipal() ;
 		Algorithm algo = Algorithm.HMAC256("secretCode".getBytes());
 		String access_token = JWT.create().
 						withSubject(user.getUsername()).
-						withExpiresAt(new Date( System.currentTimeMillis() + 10*60*100*5 )).  // je pense que c'est 2min hhhh
+						withExpiresAt(new Date( System.currentTimeMillis() + 10*60*1000*50 )).  // 
 						withIssuer(request.getRequestURL().toString()).
 						withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())).
 						sign(algo);
 		String refresh_token = JWT.create().
 				withSubject(user.getUsername()).
-				withExpiresAt(new Date( System.currentTimeMillis() + 30*60*100*5 )). //much more 
+				withExpiresAt(new Date( System.currentTimeMillis() + 30*60*1000*50 )). //much more 
 				withIssuer(request.getRequestURL().toString()).
 				sign(algo);
-//		response.setHeader("access_token", access_token); 
-//		response.setHeader("refresh_token", refresh_token);
+
 		Map<String, Object> tokens = new HashMap<>() ;
 		tokens.put("access_token", access_token) ;
 		tokens.put("refresh_token", refresh_token) ;
-		tokens.put("Object", user) ;					// i changed this and the type of the HashMap object
+		
+		tokens.put("user", user) ;					// i changed this and the type of the HashMap object
 		response.setContentType(org.springframework.http.MediaType.APPLICATION_JSON_VALUE);
 		new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 		

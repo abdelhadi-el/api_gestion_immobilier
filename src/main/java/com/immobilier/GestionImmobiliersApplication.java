@@ -26,6 +26,8 @@ public class GestionImmobiliersApplication {
 	CommandLineRunner run(UserServices userService) {
 		return args -> {
 			userService.save(new Utilisateur(1, "abdelhadi", "meaill", "passHash", "USER", "063526626", "Maroc KHouribga")) ;
+			userService.save(new Utilisateur(2, "aaaa", "email", "1234", "ADMIN", "063526626", "Maroc KHouribga")) ;
+
 		} ;
 	}
 }

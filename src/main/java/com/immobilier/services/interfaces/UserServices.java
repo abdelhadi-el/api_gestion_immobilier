@@ -14,5 +14,5 @@ public interface UserServices {
 	Boolean delete(Integer id) ;
 	
 
-
+	
 }

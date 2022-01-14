@@ -30,9 +30,8 @@ public class Annonce {
 	@JoinColumn(name = "id_user_reserve", referencedColumnName = "id_user")
 	private Utilisateur user_reserve ;
 	private String titre ;
-//	@OneToOne
-//	@JoinColumn(name = "image_annonce", referencedColumnName = "id_image")
-//	private byte[] image_annonce ;
+//	@Column(name = "picByte", length = 15048576)
+//	private byte[] picByte;
 	private String type ;
 	private Date date_annonce ;
 	private String etat_validation ;
